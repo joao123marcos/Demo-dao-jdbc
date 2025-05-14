@@ -6,16 +6,20 @@ import java.util.Locale;
 
 import Model.Class.Department;
 import Model.Class.Seller;
+import Model.Dao.DaoFactory;
+import Model.Dao.SellerDao;
 
 public class Program {
     public static void main(String[] args) {
         Locale.setDefault(Locale.US);
         LocalDate dataAtual = LocalDate.now();
-        
+
         Department obj = new Department(1, "Books");
 
         Seller seller = new Seller(1, "Joao",
         "joao@gmail.com", dataAtual, 2000.0, obj);
+
+        SellerDao sellerDao = DaoFactory.createSellerDao();
 
         System.out.println();
         System.out.println(obj);
