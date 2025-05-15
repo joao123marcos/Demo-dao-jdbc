@@ -54,8 +54,18 @@ public class DepartmentDaoJDBC  implements DepartmentDao{
 
     @Override
     public void deleteById(Integer Id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delet'");
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement(
+                "delete from department a "+
+                "where a.id = ?");
+            ps.setInt(1, Id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }finally{
+            DB.closeStatement(ps);
+        }
     }
 
     @Override
