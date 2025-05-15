@@ -43,11 +43,18 @@ public class Program {
         System.out.println("---- Teste 4 Seller: Inser ------");
         LocalDate data = LocalDate.parse("15/05/2010", fmt); 
         Seller seller2 = new Seller(null, "Joao Pedro", 
-           "JoaoPedro@gmail.com", data, 4500.00, 
+           "JoaoPedroa@gmail.com", data, 4500.00, 
            department);
         
         sellerDao.insert(seller2);
         System.out.println("Seller inserted, your id is: "+seller2.getIdSeller());
+
+        System.out.println();
+        System.out.println("---- Teste 5 Seller: Update ------");
+        seller2 = sellerDao.findById(1);
+        seller2.setNameSeller("Maria das coves");
+        sellerDao.update(seller2);
+        System.out.println("Updated Seller sucess");
           
 
     }
