@@ -1,5 +1,6 @@
 package main;
 
+import java.util.List;
 import java.util.Scanner;
 
 import Model.Class.Department;
@@ -35,5 +36,26 @@ public class Programam2 {
 
         System.out.println();
         System.out.println("Department deleted with sucess");
+
+        System.out.println();
+        System.out.println("----- Teste 4 Department: FindById ---------");
+        System.out.print("Enter id department: ");
+        id = sc.nextInt();
+        sc.nextLine();
+        dep = departmentDao.findById(id);
+        if (dep != null) {
+            System.out.println("Department found!");
+        }else{
+            System.out.println("Department not found!");
+        }
+        
+        System.out.println();
+        System.out.println("----- Teste 5 Department: FindAll ---------");
+        List<Department> list = departmentDao.findAll();
+        for (Department d : list) {
+            System.out.println(d);
+        }
+        
+        sc.close();
     }
 }
