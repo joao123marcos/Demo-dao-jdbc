@@ -28,7 +28,6 @@ public class SellerDaoJDBC implements SellerDao{
     @Override
     public void insert(Seller objSeller) {
         PreparedStatement ps = null;
-
         try {
             ps = connection.prepareStatement(
             "INSERT INTO seller "+ 
@@ -51,11 +50,14 @@ public class SellerDaoJDBC implements SellerDao{
                     int idSeller = rs.getInt(1);
                     objSeller.setIdSeller(idSeller);
                 }
+                DB.closeResultSet(rs);
             }else{
                 throw new DbException("Error insert Seller ");
             }
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
+        }finally{
+            DB.closeStatement(ps);
         }
     }
 
