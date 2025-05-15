@@ -87,9 +87,17 @@ public class SellerDaoJDBC implements SellerDao{
     }
 
     @Override
-    public void delet(Seller objSeller) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delet'");
+    public void deleteById(Integer id) {
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement("DELETE FROM seller WHERE Id = ?");
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }finally{
+            DB.closeStatement(ps);
+        }
     }
 
     @Override

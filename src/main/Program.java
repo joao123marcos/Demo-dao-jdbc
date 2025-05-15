@@ -55,7 +55,11 @@ public class Program {
         seller2.setNameSeller("Maria das coves");
         sellerDao.update(seller2);
         System.out.println("Updated Seller sucess");
-          
+        
+        System.out.println();
+        System.out.println("---- Teste 6 Seller: DeleteById ------");
+        sellerDao.deleteById(1);
+        System.out.println("Seller deleted with sucess!");
 
     }
 }
