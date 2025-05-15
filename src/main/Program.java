@@ -1,6 +1,9 @@
 package main;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 import Model.Class.Department;
 import Model.Class.Seller;
@@ -10,8 +13,10 @@ import Model.Dao.SellerDao;
 public class Program {
     public static void main(String[] args) {
 
+        Locale.setDefault(Locale.US);
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+       
         SellerDao sellerDao = DaoFactory.createSellerDao();
-
         Seller seller = sellerDao.findById(5);
 
         System.out.println();
@@ -33,6 +38,17 @@ public class Program {
         for (Seller s : list) {
             System.out.println(s);
         }
+
+        System.out.println();
+        System.out.println("---- Teste 4 Seller: Inser ------");
+        LocalDate data = LocalDate.parse("15/05/2010", fmt); 
+        Seller seller2 = new Seller(null, "Joao Pedro", 
+           "JoaoPedro@gmail.com", data, 4500.00, 
+           department);
+        
+        sellerDao.insert(seller2);
+        System.out.println("Seller inserted, your id is: "+seller2.getIdSeller());
+          
 
     }
 }

@@ -1,9 +1,11 @@
 package Model.Dao.ImplementsDao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,8 +27,36 @@ public class SellerDaoJDBC implements SellerDao{
 
     @Override
     public void insert(Seller objSeller) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'insert'");
+        PreparedStatement ps = null;
+
+        try {
+            ps = connection.prepareStatement(
+            "INSERT INTO seller "+ 
+            "(Name, Email, BirthDate, BaseSalary, DepartmentId) "+
+            "VALUES "+
+            "(?, ?, ?, ?, ?)",
+            Statement.RETURN_GENERATED_KEYS);
+
+            ps.setString(1, objSeller.getNameSeller());
+            ps.setString(2, objSeller.getEmailSeller());
+            //Converti o meu localDate do objeto para date, que é oq o JDBC usa
+            ps.setDate(3, Date.valueOf(objSeller.getBirthDate()));
+            ps.setDouble(4, objSeller.getSalarySeller());
+            ps.setInt(5, objSeller.getDepartment().getId());
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected >0 ) {
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    int idSeller = rs.getInt(1);
+                    objSeller.setIdSeller(idSeller);
+                }
+            }else{
+                throw new DbException("Error insert Seller ");
+            }
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
     }
 
     @Override
