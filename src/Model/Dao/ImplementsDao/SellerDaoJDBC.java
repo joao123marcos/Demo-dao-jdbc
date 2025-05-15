@@ -54,23 +54,10 @@ public class SellerDaoJDBC implements SellerDao{
             /*Como o rs é um formato de tabela e aponta para posição 0 eu preciso
               verificar se o rs encontou algum vendedor lá no banco*/
             if (rs.next()) { //verifico oq tem dentro do rs
-                Department dep = new Department();
-                dep.setId(rs.getInt("DepartmentId"));
-                dep.setNameDepartment(rs.getString("DepName"));
-                /*Com isso eu tenho um departamento instanciado recuperando
-                 dados do meu banco*/
-                
-                /////////////////////////////////////////////////////// 
-                Seller seller = new Seller();
-                seller.setIdSeller(rs.getInt("Id"));
-                seller.setNameSeller(rs.getString("Name"));
-                seller.setEmailSeller(rs.getString("Email"));
-                seller.setBirthDate(rs.getDate("BirthDate").
-                    toLocalDate());
-                seller.setSalarySeller(rs.getDouble("BaseSalary"));
-                seller.setDepartment(dep);
-                /*Com insso eu instanciei um objeto Seller recuperando dados
-                do banco*/
+                Department dep = instantiateDepartment(rs); 
+               
+                Seller seller = instantiateSeller(rs, dep);
+
                 return seller;
             }
             return null;
@@ -86,6 +73,30 @@ public class SellerDaoJDBC implements SellerDao{
     public List<Seller> findAll() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+    }
+
+    private Department instantiateDepartment(ResultSet rs) throws SQLException {
+        Department dep = new Department();
+        dep.setId(rs.getInt("DepartmentId"));
+        dep.setNameDepartment("Name");
+        return dep;
+
+    }
+
+    private Seller instantiateSeller(ResultSet rs, Department dep) throws 
+     SQLException {
+
+        /*Com isso eu tenho um departamento instanciado recuperando 
+        dados do meu banco*/
+        Seller seller = new Seller();
+        seller.setIdSeller(rs.getInt("Id"));
+        seller.setNameSeller(rs.getString("Name"));
+        seller.setEmailSeller(rs.getString("Email"));
+        seller.setBirthDate(rs.getDate("BirthDate").toLocalDate());
+        seller.setSalarySeller(rs.getDouble("BaseSalary"));
+        seller.setDepartment(dep);
+        return seller;
+
     }
     
 }
